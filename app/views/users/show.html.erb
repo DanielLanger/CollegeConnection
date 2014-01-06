@@ -1,0 +1,56 @@
+<p id="notice"><%= notice %></p>
+
+<h2> <%= @user.name %></h2>
+<% if @user.photo.file? %>
+  <%= image_tag @user.photo.url(:small) %>
+<% else %>
+ <ul> No Photo! </ul>
+<% end %>
+
+<br />
+<br />
+<div class="row">
+   <div class="span6">
+<p>Email <h6><%= @user.email %></h6> </p>
+
+
+<p> Facebook  <h6> <%= link_to(image_tag("http://blindtastingclub.net/wp-content/themes/dark-choco-10/images/Facebook_button_small.gif"), @user.facebook, :target => '_blank') %> </h6></p>
+
+
+<% if @user.position == "College" %>
+<p> Major  <h6><%= @user.quiz.q1 %></h6> </p>
+<% else %>
+
+<p> Possible Major(s)  <h6>
+ <% for q in @user.quiz.q1 %>
+      <% if q != nil %>
+        <h6><%= q  %></h6>
+      <% end %>
+    <% end %>
+</p>
+
+<% end  %>
+
+<p> Activities
+  <% for q in @user.quiz.q2 %>
+      <% if q != nil %>
+        <h6><%= q  %></h6>
+      <% end %>
+    <% end %>
+</p>
+
+<p> School
+ <h6> <%= @user.quiz.q4 %></h6>
+</p>
+
+<br />
+<br />
+
+<h5><%= link_to 'Back To Your Matches', users_path %></h5>
+
+</div>
+
+<div class="span4">
+  <p>Bio <h6><%= @user.bio %></h6></p><br />
+  <p>Hometown <h6> <%= @user.from %></h6></p>
+</div>

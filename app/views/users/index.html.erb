@@ -1,0 +1,77 @@
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+
+
+<% if current_user.quiz != nil %>
+
+ <div class= 'pro' style="float:right" >
+	<h4><%= link_to 'View Your Profile', current_user %></h4>
+  </div>
+<% end %>
+
+<h2>My Matches</h2><br />
+
+
+
+<h5><%=link_to 'Take the Matching Quiz!', new_quiz_path %></h5><br /><br />
+
+<% if current_user.quiz != nil %>
+
+<table class= "table">
+  <tr>
+    <th></th>
+    <th>Name</th>
+    <% if current_user.position == "High School" %>
+           <%= form_tag '/users', :method=> "get" do %>
+             <th>  School:  
+               <%= select_tag("filter", options_for_select(@short, :selected => params["filter"]), :onchange => "this.form.submit();", :prompt => "All") %>
+            </th> 
+           <% end %>
+    <% end %>
+    <th>Percent Match</th>
+  </tr>
+  
+  <script type="text/javascript">
+  function getVal( oSelect ) 
+  {
+    var selectedValue = oSelect.options[ oSelect.selectedIndex ].value;
+  }
+</script>
+  
+<% @hash.keys.sort.reverse.each do |key| %>
+  <% if current_user.position == "High School" %>
+    <% if current_user.quiz.q5.include?(@hash[key].q4) %>
+ 	 <tr>
+    	<% if User.find_by_id(@hash[key].user_id).photo.file? %>
+          <td><%=  image_tag User.find_by_id(@hash[key].user_id).photo.url(:small) %></td>
+        <% else %>
+          <td> No Photo! </td>
+          <% end %>
+        <td><h6><u><%= link_to @hash[key].userName, User.find_by_id(@hash[key].user_id) %></u></h6></td>
+        <td><h6><%= @hash[key].q4 %></h6></td>
+       <td><%= sprintf( "%0.01f", key) %> </td>
+    </tr>
+    <% end %>    
+  <% else %>
+    <tr>
+    <% if @hash[key].q5.include?(current_user.quiz.q4) %>
+      <% if User.find_by_id(@hash[key].user_id).photo.file? %>
+        <td><%=  image_tag User.find_by_id(@hash[key].user_id).photo.url(:small) %></td>
+      <% else %>
+        <td> No Photo! </td>
+      <% end %>
+    <td><h6><u><%= link_to @hash[key].userName, User.find_by_id(@hash[key].user_id) %></u></h6></td>
+    <td><%= sprintf( "%0.01f", key)%> </td>
+    </tr>
+    <% end %>
+  <% end %>
+  
+<% end %>
+
+</table>
+
+<% else %>
+
+<h4> You Have No Matches </h4>
+
+<% end %>
+

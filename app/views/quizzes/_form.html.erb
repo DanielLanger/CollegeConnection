@@ -1,0 +1,71 @@
+<%= form_for(@quiz, html: {class: "nice"}) do |f| %>
+  <% if @quiz.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@quiz.errors.count, "error") %> prohibited this quiz from being saved:</h2>
+
+      <ul>
+      <% @quiz.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if current_user.position== "College" %>
+  <div class="field">
+    <h5>Current Major</h5><br />
+    <%= f.collection_select(:q1, Major.all, :name, :name, :prompt => "Select a Major") %>
+  </div>
+  
+  <% else %>
+   <div class="field">
+    <h5>Choose your top three choices for a possible major. <br />
+    If you dont have three choices, leave the selection box as is. <br />
+    Your first choice will hold the most weight in the matching process, <br />
+    while your last choice will hold the least weight.  <br />
+    Please do not pick the same major twice. </h5><br />
+    <h5> Choice 1  </h5>
+    <%= f.collection_select(:q1, Major.all, :name, :name, {:prompt => "Select a Major"}, {:id => "dropdown_1", :name => "quiz[q1][]"}) %></br>
+    <h5> Choice 2  </h5>
+    <%= f.collection_select(:q1, Major.all, :name, :name, {:prompt => "Select a Major"}, {:id => "dropdown_2", :name => "quiz[q1][]"}) %></br>
+    <h5> Choice 3  </h5>
+    <%= f.collection_select(:q1, Major.all, :name, :name, {:prompt => "Select a Major"}, {:id => "dropdown_2", :name => "quiz[q1][]"}) %>
+  </div>
+  
+  
+  <% end %>
+    
+    
+  <div class="field">
+    <h5>Activites</h5><br />
+    <% for activity in Activity.find(:all) %>
+    <div>
+       <%= f.check_box(:q2, {:multiple=> true}, activity.name, nil) %> <%=activity.name %>
+    </div>
+  <% end %>
+  </div>
+  
+  <% if current_user.position == "College" %>
+  <div class="field">
+  <h5>Your School</h5><br />
+    <%= f.collection_select(:q4, School.all, :name, :name, :prompt => "Select Your School") %><br /><br />
+  </div>
+  
+  <% else %>
+  
+  <div class="field">
+  <h5>Schools You Are Interested In</h5><br />
+  <% for school in School.find(:all) %>
+   <div>
+   <%= f.check_box(:q5, {:multiple=> true}, school.name, nil) %> <%= %> <%=school.name %>
+   </div>
+   <% end %>
+  </div>
+  
+  <% end %>
+  
+  <div class="actions">
+    <%= f.submit "Submit" %>
+  </div>
+  
+<% end %>

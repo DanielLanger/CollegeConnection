@@ -1,0 +1,41 @@
+<%= form_for(@user,:url => { :action => "update" }, :html=> {:multipart => true}) do |f| %>
+  
+  
+<div class="form-inline">  
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+<div class="row-fluid">
+  <div class="span6">
+	  <div><%= f.label :email %><br />
+	  <%= f.email_field :email %></div><br /> 
+	  
+	  <div><%= f.label :facebook %> Profile Link (optional)<br /> 
+	  <%= f.text_field :facebook %></div><br /> 
+	  
+	  Add Profile Picture
+	  <div><%= f.file_field :photo %> </div><br />
+	  
+	   <div>Hometown (optional)<br /> 
+	  <%= f.text_field :from %></div><br /> 
+	  
+	  <div class="actions">
+     	  <%= f.submit "Submit" %>
+	  </div>
+    </div>
+  <div class= "span4">
+    <div><%= f.label :bio %> (optional) <br /> 
+  	<%= f.text_area :bio  %></div>
+  </div>	
+</div>
+</div>
+<% end %>

@@ -1,0 +1,37 @@
+
+<%= notice %>
+<%= alert %>
+
+<h2>Sign up</h2> <br />
+
+<div class="form-inline">
+<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div><%= f.label :name %><br />
+  <%= f.text_field :name %></div>
+
+  <div><%= f.label :email %><br />
+  <%= f.email_field :email %></div>
+  
+  <div><%= f.label :facebook %> Profile Link (optional)<br /> 
+  <%= f.text_field :facebook %></div>
+
+  <div><%= f.label :password %><br />
+  <%= f.password_field :password %></div>
+
+  <div><%= f.label :password_confirmation %><br />
+  <%= f.password_field :password_confirmation %></div>
+  
+   <div><%= f.label :position_High_School, "High School Student" %>
+    <%= f.radio_button :position, "High School"%></div>
+    <div><%= f.label :position_College, "College Student" %>
+	<%= f.radio_button :position, "College" %></div>
+
+
+  <div><%= f.submit "Sign up" %></div>
+  </div>
+<% end %>
+
+<%= link_to 'Back', "/" %>
+

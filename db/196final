@@ -1,0 +1,4 @@
+https://github.com/DanielLanger/CollegeConnection
+collegeconnect.heroku.com
+
+This site matches perspective college students with current students based on similar academic and social interests. Students sign up as either a high school or college student and take a short quiz with questions about their interests. Then by a short matching algorithm, students are matched with students of the opposite standing (i.e. high school students are matched with college students and vice versa). In order of percent match, students can view their matches' name, major, interests, and if they provided, a link to their Facebook page. 
